@@ -1,0 +1,1 @@
+MAX_RESTART = 10

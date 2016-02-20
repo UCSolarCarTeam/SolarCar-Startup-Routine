@@ -3,35 +3,32 @@
 import sys
 import subprocess
 import time
-#process names from text file stored into array
-#sleep after each check for 2 secs
-
+import settings
 
 def main(): 
-    #read program names from file and put them into an array
     fileName = open(sys.argv[1])
     programs = fileName.read().splitlines()
     fileName.close()
     
-    numberOfPrograms = programs.__len__()
-    MAX_RESTART = 10
-    timesRestarted = [0] * numberOfPrograms
+    numberOfPrograms = len(programs)
+    timesRestarted = {program: 0 for program in programs}
     
-    #start up programs in separate processes
+    # Start up programs in separate processes
     processes = []
-    for i in range(numberOfPrograms):
-        processes.append(subprocess.Popen(programs[i]))
+    for program in programs:
+        processes.append(subprocess.Popen(program))
     
-    #check processes and respond accordingly
+    # Check processes and respond accordingly
     while True:
         for i in range(numberOfPrograms):
-            if(processes[i].poll() is not None):
-                if(timesRestarted[i] > MAX_RESTART):
-                    print(programs[i], "exceeded", MAX_RESTART, "restarts")
+            if processes[i].poll() is not None:
+                if timesRestarted[programs[i]] > settings.MAX_RESTART:
+                    print(programs[i], "exceeded", settings.MAX_RESTART, "restarts")
                     return
                 processes[i] = subprocess.Popen(programs[i])
-                timesRestarted[i] += 1          
+                timesRestarted[programs[i]] += 1
         time.sleep(2)
     
 if __name__ == '__main__':
     main()
+    
