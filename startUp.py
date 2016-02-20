@@ -3,32 +3,40 @@
 import sys
 import subprocess
 import time
+
 import settings
 
-def main(): 
+def main():
+    
+    
+    class Process:
+        
+        def __init__(self, path, process):
+            self.path = path
+            self.process = process
+            self.timesRestarted = 0
+            
+            
     fileName = open(sys.argv[1])
     programs = fileName.read().splitlines()
     fileName.close()
-    
-    numberOfPrograms = len(programs)
-    timesRestarted = {program: 0 for program in programs}
-    
+
     # Start up programs in separate processes
-    processes = []
-    for program in programs:
-        processes.append(subprocess.Popen(program))
+    processes = [subprocess.Popen(program) for program in programs]
+    
+    solarCarProcesses = [Process(path, process) for path, process in zip(programs, processes)]
     
     # Check processes and respond accordingly
     while True:
-        for i in range(numberOfPrograms):
-            if processes[i].poll() is not None:
-                if timesRestarted[programs[i]] > settings.MAX_RESTART:
-                    print(programs[i], "exceeded", settings.MAX_RESTART, "restarts")
+        for solarCarProcess in solarCarProcesses:
+            if solarCarProcess.process.poll() is not None:
+                if solarCarProcess.timesRestarted > settings.MAX_RESTART:
+                    print(solarCarProcess.path, "exceeded", settings.MAX_RESTART, "restarts")
                     return
-                processes[i] = subprocess.Popen(programs[i])
-                timesRestarted[programs[i]] += 1
+                solarCarProcess.process = subprocess.Popen(solarCarProcess.path)
+                solarCarProcess.timesRestarted += 1
         time.sleep(settings.SLEEP_TIME)
-    
+        
 if __name__ == '__main__':
     main()
     
