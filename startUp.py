@@ -27,7 +27,7 @@ def main():
                     return
                 processes[i] = subprocess.Popen(programs[i])
                 timesRestarted[programs[i]] += 1
-        time.sleep(2)
+        time.sleep(settings.SLEEP_TIME)
     
 if __name__ == '__main__':
     main()
