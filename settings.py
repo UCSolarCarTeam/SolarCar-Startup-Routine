@@ -1,0 +1,3 @@
+MAX_RESTART = 1
+SLEEP_TIME = 2
+
