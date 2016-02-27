@@ -4,11 +4,11 @@ import sys
 import time
 
 import settings
-import classes
+from solar_car_process import SolarCarProcess
 
 def main():
     with open(sys.argv[1]) as file:
-        solar_car_processes = [classes.SolarCarProcess(path) for path in file.read().splitlines()]
+        solar_car_processes = [SolarCarProcess(path) for path in file.read().splitlines()]
 
     # Check processes and respond accordingly
     while True:
