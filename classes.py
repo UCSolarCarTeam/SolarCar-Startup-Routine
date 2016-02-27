@@ -15,5 +15,5 @@ class SolarCarProcess:
     
     def check_status(self):
         return self.process.poll()
-    
-    
+        
+        
