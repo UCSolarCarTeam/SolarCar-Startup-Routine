@@ -27,7 +27,6 @@ class SolarCarProcess:
 class Domovoi:
         
     def run(self):
-        logging.basicConfig(filename = sys.argv[2], format = '%(asctime)s - %(levelname)s - %(message)s')
         with open(sys.argv[1]) as file:
             solar_car_processes = [SolarCarProcess(shlex.split(path)) for path in file.read().splitlines()]
         
