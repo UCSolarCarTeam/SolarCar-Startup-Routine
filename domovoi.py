@@ -24,7 +24,10 @@ class Domovoi:
 
     def kill_processes(self, solar_car_processes):
         for solar_car_process in solar_car_processes:
-            solar_car_process.process.kill()
+            try:
+                solar_car_process.process.kill()
+            except AttributeError:
+                pass
             solar_car_processes.remove(solar_car_process)
 
     def parse_file(self, processes_file):
