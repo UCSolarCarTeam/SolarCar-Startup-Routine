@@ -6,12 +6,8 @@ import subprocess
 class SolarCarProcess:
     
     def __init__(self,path):
-        try:
-            self.path = path
-            self.process = subprocess.Popen(path, stderr=subprocess.PIPE, universal_newlines=True)
-            self.timesRestarted = 0
-        except OSError as e:
-            raise OSError(e)
+        self.path = path
+        self.timesRestarted = 0
 
     def start(self):
         try:

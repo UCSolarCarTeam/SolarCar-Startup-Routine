@@ -13,16 +13,27 @@ from solar_car_process import SolarCarProcess
 
 
 class Domovoi:
+    def start_processes(self, solar_car_processes):
+        for solar_car_process in solar_car_processes:
+            try:
+                solar_car_process.start()
+            except OSError as e:
+                logging.critical(e)
+                self.kill_processes(solar_car_processes)
+                raise
+
+    def kill_processes(self, solar_car_processes):
+        for solar_car_process in solar_car_processes:
+            solar_car_process.process.kill()
+            solar_car_processes.remove(solar_car_process)
+
     def parse_file(self, processes_file):
-        try:
-            with open(processes_file) as file:
-                return([SolarCarProcess(shlex.split(path)) for path in file.read().splitlines()])
-        except OSError as e:
-            logging.critical(e)
-            raise
+        with open(processes_file) as file:
+            return([SolarCarProcess(shlex.split(path)) for path in file.read().splitlines()])
 
     def run(self, processes_file):
         solar_car_processes = self.parse_file(processes_file)
+        self.start_processes(solar_car_processes)
         # Check processes and respond accordingly
         while True:
             for solar_car_process in solar_car_processes:
@@ -38,6 +49,7 @@ class Domovoi:
                             solar_car_process.start()
                         except OSError as e:
                             logging.critical(e)
+                            self.kill_processes(solar_car_processes)
                             raise
                         startup_error = solar_car_process.process.communicate()[1]
                         if startup_error:
