@@ -12,17 +12,15 @@ class SolarCarProcess:
             self.process = subprocess.Popen(path, stderr=subprocess.PIPE, universal_newlines=True)
             self.timesRestarted = 0
         except OSError as e:
-            logging.error(e)
-            self.process = None
+            raise OSError(e)
 
     def start(self):
         try:
             self.process = subprocess.Popen(self.path, stderr=subprocess.PIPE, universal_newlines=True)
             self.timesRestarted += 1
         except OSError as e:
-            logging.error(e)
-            self.process = None
-    
+            raise OSError(e)
+
     def check_status(self):
         return self.process.poll()
     
