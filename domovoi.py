@@ -46,7 +46,7 @@ class Domovoi:
                         logging.warning("%s crash number %d with exit code %d",
                             os.path.basename(solar_car_process.path[0]), solar_car_process.timesRestarted + 1, solar_car_process.process.returncode)
                         try:
-                            solar_car_process.start()
+                            solar_car_process.restart()
                         except OSError as e:
                             logging.critical(e)
                             self.kill_processes(solar_car_processes)
