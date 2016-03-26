@@ -13,6 +13,13 @@ from solar_car_process import SolarCarProcess
 
 
 class Domovoi:
+    def check_paths(self, solar_car_processes):
+        for solar_car_process in solar_car_processes:
+            if not os.path.exists(solar_car_process.path[0]):
+                print("No such path: %s" % solar_car_process.path[0])
+                logging.critical("No such path: %s", solar_car_process.path[0])
+                exit()
+
     def start_processes(self, solar_car_processes):
         for solar_car_process in solar_car_processes:
             try:
@@ -36,16 +43,19 @@ class Domovoi:
 
     def run(self, processes_file):
         solar_car_processes = self.parse_file(processes_file)
+        self.check_paths(solar_car_processes)
         self.start_processes(solar_car_processes)
         # Check processes and respond accordingly
         while True:
             for solar_car_process in solar_car_processes:
                 if solar_car_process.check_status():
-                    if solar_car_process.timesRestarted == settings.MAX_RESTART:
+                    if solar_car_process.process.returncode == 0:
+                        solar_car_processes.remove(solar_car_process)
+                    elif solar_car_process.timesRestarted == settings.MAX_RESTART:
                         logging.critical("%s reached %d restart(s) with exit code %d",
                             os.path.basename(solar_car_process.path[0]), settings.MAX_RESTART, solar_car_process.process.returncode)
                         solar_car_processes.remove(solar_car_process)
-                    else:
+                    else:   
                         logging.warning("%s crash number %d with exit code %d",
                             os.path.basename(solar_car_process.path[0]), solar_car_process.timesRestarted + 1, solar_car_process.process.returncode)
                         solar_car_process.restart()
