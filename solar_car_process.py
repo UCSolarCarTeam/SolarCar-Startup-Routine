@@ -16,11 +16,8 @@ class SolarCarProcess:
             raise
 
     def restart(self):
-        try:
-            self.process = subprocess.Popen(self.path, stderr=subprocess.PIPE, universal_newlines=True)
-            self.timesRestarted += 1
-        except OSError:
-            raise
+        self.process = subprocess.Popen(self.path, stderr=subprocess.PIPE, universal_newlines=True)
+        self.timesRestarted += 1
 
     def check_status(self):
         return self.process.poll()
