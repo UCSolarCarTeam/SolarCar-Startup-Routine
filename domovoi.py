@@ -16,7 +16,6 @@ class Domovoi:
     def check_paths(self, solar_car_processes):
         for solar_car_process in solar_car_processes:
             if not os.path.exists(solar_car_process.path[0]):
-                print("No such path: %s" % solar_car_process.path[0])
                 logging.critical("No such path: %s", solar_car_process.path[0])
                 exit()
 
@@ -31,6 +30,7 @@ class Domovoi:
 
     def kill_processes(self, solar_car_processes):
         for solar_car_process in solar_car_processes:
+            # Ensures that all processes are stopped
             try:
                 solar_car_process.process.kill()
             except AttributeError:
