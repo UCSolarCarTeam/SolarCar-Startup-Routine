@@ -13,13 +13,19 @@ from solar_car_process import SolarCarProcess
 
 
 class Domovoi:
-    def check_paths(self, solar_car_processes): # Checks the path of each process and throws an error if it's invalid
-        for solar_car_process in solar_car_processes: # For each process 
+    '''
+    Check the path of each process, throw an error if the path is invalid
+    '''
+    def check_paths(self, solar_car_processes): 
+        for solar_car_process in solar_car_processes: # For each solar_car_process 
             if not os.path.exists(solar_car_process.path[0]):
                 logging.critical("No such path: %s", solar_car_process.path[0])
                 exit()
 
-    def start_processes(self, solar_car_processes): # Try and start the processes, if an error occurs, kill the process
+    '''
+    Try and start the processes, if an error occurs, kill the process
+    '''
+    def start_processes(self, solar_car_processes): 
         for solar_car_process in solar_car_processes:
             try:
                 solar_car_process.start()
@@ -28,16 +34,22 @@ class Domovoi:
                 self.kill_processes(solar_car_processes)
                 raise
 
-    def kill_processes(self, solar_car_processes): # Will remove all the processes from the list
+    '''
+    Kill and remove all the processes from the list
+    '''
+    def kill_processes(self, solar_car_processes):
         for solar_car_process in solar_car_processes:
             # Ensures that all processes are stopped
             try:
-                solar_car_process.process.kill() #This kills the process
+                solar_car_process.process.kill()
             except AttributeError: # Fails to kill everything
                 pass
             solar_car_processes.remove(solar_car_process)
 
-    def parse_file(self, processes_file): # Opens processes_file which should contain a list of paths to each SolarCarProcess, and makes an object for each one.
+    '''
+    Opens processes_file which should contain a list of paths to each SolarCarProcess, and makes an object for each one.
+    '''
+    def parse_file(self, processes_file): 
         with open(processes_file) as file:
             return([SolarCarProcess(shlex.split(path)) for path in file.read().splitlines()])
 
@@ -45,7 +57,7 @@ class Domovoi:
         solar_car_processes = self.parse_file(processes_file)
         self.check_paths(solar_car_processes)
         self.start_processes(solar_car_processes)
-        # Check processes and respond accordingly
+        # Watch over the processes and respond accordingly
         while True:
             for solar_car_process in solar_car_processes:
                 if solar_car_process.check_status():
@@ -59,8 +71,8 @@ class Domovoi:
                         logging.warning("%s crash number %d with exit code %d",
                             os.path.basename(solar_car_process.path[0]), solar_car_process.timesRestarted + 1, solar_car_process.process.returncode)
                         solar_car_process.restart()
-                        startup_error = solar_car_process.process.communicate()[1]# Communicate returns a tuple (stdoutdata, stderrdata), so if nothing is in the [1] index we are good
-                        if startup_error:# If there is, we tell them and remove it
+                        startup_error = solar_car_process.process.communicate()[1]# Communicate returns a tuple (stdoutdata, stderrdata)
+                        if startup_error:# If there is a value in stderrdata, notify and remove it
                             logging.error("%s unable to startup: %s",
                                 os.path.basename(solar_car_process.path[0]), startup_error)
                             solar_car_processes.remove(solar_car_process)

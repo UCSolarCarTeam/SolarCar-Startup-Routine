@@ -5,11 +5,14 @@ import subprocess
 
 class SolarCarProcess:
     
-    def __init__(self,path): # Initializes
+    def __init__(self,path):
         self.path = path
         self.timesRestarted = 0
 
-    def start(self): # Start the process 
+    '''
+    Attempt to start the process.
+    '''
+    def start(self): 
         try:
             self.process = subprocess.Popen(self.path, stderr=subprocess.PIPE, universal_newlines=True)
         except OSError:
@@ -20,5 +23,5 @@ class SolarCarProcess:
         self.timesRestarted += 1
 
     def check_status(self): 
-        return self.process.poll() # True if the process has terminated
+        return self.process.poll() # Returns true if the process has terminated.
     
