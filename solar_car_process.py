@@ -9,6 +9,9 @@ class SolarCarProcess:
         self.path = path
         self.timesRestarted = 0
 
+    '''
+    Attempt to start the process.
+    '''
     def start(self):
         try:
             self.process = subprocess.Popen(self.path, stderr=subprocess.PIPE, universal_newlines=True)
@@ -20,5 +23,5 @@ class SolarCarProcess:
         self.timesRestarted += 1
 
     def check_status(self):
-        return self.process.poll()
+        return self.process.poll() # Returns true if the process has terminated.
     
