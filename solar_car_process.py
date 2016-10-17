@@ -12,7 +12,7 @@ class SolarCarProcess:
     '''
     Attempt to start the process.
     '''
-    def start(self): 
+    def start(self):
         try:
             self.process = subprocess.Popen(self.path, stderr=subprocess.PIPE, universal_newlines=True)
         except OSError:
@@ -22,6 +22,6 @@ class SolarCarProcess:
         self.process = subprocess.Popen(self.path, stderr=subprocess.PIPE, universal_newlines=True)
         self.timesRestarted += 1
 
-    def check_status(self): 
+    def check_status(self):
         return self.process.poll() # Returns true if the process has terminated.
     
