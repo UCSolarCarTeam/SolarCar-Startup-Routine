@@ -7,7 +7,7 @@ The name derives from Slavic folklore where a domovoi is a protective house spir
 ## Running
 
 Run as ./domovoi.py [processesfile]
-where processesfile is formatted as the following:  
+where processesfile is a text file that is formatted as the following:  
 
 path/to/process1 arg1 arg2 args...  
 path/to/process2
