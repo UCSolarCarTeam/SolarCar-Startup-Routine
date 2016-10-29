@@ -1,6 +1,5 @@
 #This contains two tests that will be tested using the pytest framework
 
-
 def func(x):
 	return x+2
 
