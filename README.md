@@ -11,3 +11,7 @@ where processesfile is a text file formatted as the following:
 
 path/to/process1 arg1 arg2 args...  
 path/to/process2
+
+### Testing
+
+To run a test, make sure you are in the directory with domovoi.py and run py.test linux and pytest on OSX
