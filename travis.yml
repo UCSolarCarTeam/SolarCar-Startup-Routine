@@ -1,0 +1,13 @@
+sudo: required
+
+install:
+    - wget 'https://sourceforge.net/projects/astyle/files/latest/download'
+    - tar -zxvf download
+    - (cd astyle/build/python && make release && sudo make install
+    - rm astyle -rf
+
+script:
+    - py.test
+    - "! (astyle *.py -r --dry-run --options=astlyerc | grep Formatted)"
+
+language: python
