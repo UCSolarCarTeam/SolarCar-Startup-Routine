@@ -58,7 +58,7 @@ class Domovoi:
         self.check_paths(solar_car_processes)
         self.start_processes(solar_car_processes)
         # Watch over the processes and respond accordingly
-        while True:
+        while len(solar_car_processes):
             for solar_car_process in solar_car_processes:
                 if solar_car_process.check_status():
                     if solar_car_process.process.returncode == 0: # Good exit, removes the process from the list
