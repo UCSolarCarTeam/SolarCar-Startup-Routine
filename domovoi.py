@@ -55,6 +55,9 @@ class Domovoi:
 
     def run(self, processes_file):
         solar_car_processes = self.parse_file(processes_file)
+        if len(solar_car_processes) == 0:
+            logging.error("There are no processes in processes_file")
+            return
         self.check_paths(solar_car_processes)
         self.start_processes(solar_car_processes)
         # Watch over the processes and respond accordingly
