@@ -61,8 +61,7 @@ class Domovoi:
         self.check_paths(solar_car_processes)
         self.start_processes(solar_car_processes)
         # Watch over the processes and respond accordingly
-        while True:
-            if len(solar_car_processes) == 0:
+        while (len(solar_car_processes)): # Checks to make sure that there are still processes to be watched over.
                 break 
             for solar_car_process in solar_car_processes:
                 if solar_car_process.check_status():
