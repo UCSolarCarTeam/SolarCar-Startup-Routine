@@ -58,9 +58,9 @@ class Domovoi:
         self.check_paths(solar_car_processes)
         self.start_processes(solar_car_processes)
         # Watch over the processes and respond accordingly
-        while True:
+        while len(solar_car_processes):
             for solar_car_process in solar_car_processes:
-                if solar_car_process.check_status():
+                if solar_car_process.check_status() != None:
                     if solar_car_process.process.returncode == 0: # Good exit, removes the process from the list
                         solar_car_processes.remove(solar_car_process)
                     elif solar_car_process.timesRestarted == settings.MAX_RESTART: # If a process restarts too many times, print this and remove it.
