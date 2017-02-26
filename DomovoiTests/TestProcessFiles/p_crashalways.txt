@@ -1,1 +1,1 @@
-Processes/p_crashalways
+DomovoiTests/Processes/p_crashalways

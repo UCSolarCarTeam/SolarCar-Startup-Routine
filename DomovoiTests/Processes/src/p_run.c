@@ -9,7 +9,7 @@ int main (void)
 	{
 		scanf("%c", &c);
 		if (c == 'q'){
-			printf("Exiting");
+			printf("Exiting\n");
 			break;
 		}
 	}

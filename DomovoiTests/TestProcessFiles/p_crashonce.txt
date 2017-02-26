@@ -1,1 +1,1 @@
-Processes/p_crashonce
+DomovoiTests/Processes/p_crashonce

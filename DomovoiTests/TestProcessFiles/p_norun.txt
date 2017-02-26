@@ -1,1 +1,1 @@
-Processes/p_norun
+DomovoiTests/Processes/p_norun
