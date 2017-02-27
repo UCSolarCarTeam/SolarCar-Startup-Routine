@@ -3,15 +3,6 @@
 
 int main (void)
 {
-	char c = '\0';
-	printf("To exit this program, press q\n");
-	while (1)
-	{
-		scanf("%c", &c);
-		if (c == 'q'){
-			break;
-		}
-	}
-
+        for (int i = 0; i < 100000; i++)
 	return 0;
 }
