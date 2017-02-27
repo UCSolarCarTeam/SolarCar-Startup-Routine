@@ -1,6 +1,6 @@
 sudo: required
 
 script:
-    - ./domovoi.py
+    - ./domovoi.py procfiletravis.txt
 
 language: python
