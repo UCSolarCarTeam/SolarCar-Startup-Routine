@@ -9,7 +9,6 @@ int main (void)
 	{
 		scanf("%c", &c);
 		if (c == 'q'){
-			printf("Exiting\n");
 			break;
 		}
 	}

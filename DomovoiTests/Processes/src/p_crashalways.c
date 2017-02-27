@@ -3,7 +3,6 @@
 
 int main(void)
 {
-	printf("Crashing\n");
 	exit(1);
 	return 0;
 }

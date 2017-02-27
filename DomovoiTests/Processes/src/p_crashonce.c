@@ -20,13 +20,11 @@ int main (void)
 	}
 	
 	fclose(fp);
-	
 	if(chk == 0)
 	{
 		fp = fopen(CRASHFILE, "w");
 		fprintf (fp, "%d", NO_CRASH);
 		fclose(fp);
-		printf("Crashing\n");
 		exit(1);
 	}
 
