@@ -1,11 +1,6 @@
 import os
 import subprocess
 
-
-
-
-
-
 def test_errorlog():
     domovoi_noruntest = subprocess.Popen(["./domovoi_tst.py", "DomovoiTests/TestProcessFiles/p_norun.txt"], stderr=subprocess.PIPE)
     domovoi_noruntest.wait()
