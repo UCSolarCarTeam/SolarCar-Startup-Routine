@@ -3,6 +3,7 @@
 
 #define CRASHFILE "crash_file.txt"
 #define NO_CRASH 1
+#define CRASH 0
 
 int main (void)
 {
@@ -20,7 +21,7 @@ int main (void)
 	}
 	
 	fclose(fp);
-	if(chk == 0)
+	if(chk == CRASH)
 	{
 		fp = fopen(CRASHFILE, "w");
 		fprintf (fp, "%d", NO_CRASH);
@@ -28,6 +29,13 @@ int main (void)
 		exit(1);
 	}
 
+        fp = fopen(CRASHFILE, "w");
+        if (fp == NULL)
+        {       
+                fprintf (stderr, "Unable to open %s. Test results are invalid.\n", CRASHFILE);
+                exit(1);
+        }
+        fprintf(fp, "%d", CRASH);
 	return 0;
 }
 	

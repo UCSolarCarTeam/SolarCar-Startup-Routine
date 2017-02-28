@@ -1,16 +1,19 @@
 import subprocess
 
-def test_errorlog():
-    domovoi_noruntest = subprocess.Popen(["./domovoi_tst.py", "DomovoiTests/TestProcessFiles/p_norun.txt"], stderr=subprocess.PIPE)
+def test_exitCode():
+    domovoi_noruntest = subprocess.Popen(["./domovoi_tst.py", "DomovoiTests/TestProcessFiles/p_goodexit.txt"], stderr=subprocess.PIPE)
     domovoi_noruntest.wait()
     f = open("testlog", "r")
+    returnCode=""
     content = f.readlines()
     f.close()
     for x in content:
-        if "CRITICAL" in x:
-            assert 1
-            return
-    assert 0
+        if "Return Code" in x:
+            returnCode=x
+    if "0" in returnCode:
+        assert 1
+    else:
+        assert 0
 
 def test_numprocesses():
     f = open("testlog", "r")
