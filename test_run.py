@@ -11,8 +11,3 @@ def test_domovoiRan():
         assert 0
         return 
     assert 1
-
-
-    
-       
-

@@ -31,7 +31,6 @@ def test_timesRestarted():
             return
     assert 1
 
-
 def test_numprocesses():
     f = open("testlog", "r")
     content = f.readlines()
@@ -50,10 +49,3 @@ def test_numprocesses():
             assert 0
             return
     assert 1
-
-
-
-
-    
-       
-

@@ -17,5 +17,3 @@ def test_errorlog():
             assert 1
             return
     assert 0
-       
-

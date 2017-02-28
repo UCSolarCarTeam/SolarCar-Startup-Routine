@@ -30,6 +30,3 @@ def test_numprocesses():
             assert 0
             return
     assert 1
-    
-       
-
