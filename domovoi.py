@@ -55,10 +55,14 @@ class Domovoi:
 
     def run(self, processes_file):
         solar_car_processes = self.parse_file(processes_file)
+        if len(solar_car_processes) == 0:
+            logging.error("There are no processes in processes_file")
+            return
         self.check_paths(solar_car_processes)
         self.start_processes(solar_car_processes)
         # Watch over the processes and respond accordingly
-        while len(solar_car_processes):
+        while (len(solar_car_processes)): # Checks to make sure that there are still processes to be watched over.
+                break 
             for solar_car_process in solar_car_processes:
                 if solar_car_process.check_status() != None:
                     if solar_car_process.process.returncode == 0: # Good exit, removes the process from the list
