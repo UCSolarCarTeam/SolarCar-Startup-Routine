@@ -14,4 +14,6 @@ path/to/process2
 
 ### Testing
 
-To run a test, make sure you are in the directory with domovoi.py and run py.test linux and pytest on OSX
+To run a test, make sure you are in the directory with the domovoi_tst.py and run py.test (tests) linux and pytest (tests) on OSX.
+
+To run all tests in the current directory just run py.test or pytest with no arguments.
