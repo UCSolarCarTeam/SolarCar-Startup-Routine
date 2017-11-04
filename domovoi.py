@@ -13,6 +13,19 @@ from solar_car_process import SolarCarProcess
 
 
 class Domovoi:
+
+    '''
+    Attempt to Ping the other pi, if the pi responds open primary processes, otherwise open secondary processes
+    '''
+    def ping_raspi(self):
+        response = os.system("ping -c 3 " + settings.HOST_IP)
+        filename = settings.PRIMARY_FILE
+        if response == 0:
+            filename = settings.PRIMARY_FILE
+        else:
+            filename = settings.SECONDARY_FILE
+        return filename
+
     '''
     Check the path of each process, throw an error if the path is invalid
     '''
@@ -85,12 +98,16 @@ class Domovoi:
 
 def main():
     parser = argparse.ArgumentParser()# Take in command line arguments
-    parser.add_argument('processes_file', help='text file of solar car processes') # Adds in a positional argument for the process_file
-    args = parser.parse_args()# Stores the arguments the user inputted
+    parser.add_argument('--primary', '-p', help='Open Domovoi in Primary Pi mode', action='store_true') # Adds a positional and optional argument for startup modes
+    args = parser.parse_args()
     os.makedirs("logs", exist_ok=True)
     logging.basicConfig(filename='logs/%s' % time.asctime(), format='%(asctime)s - %(levelname)s - %(message)s') # Makes a log of events in this session
     domovoi = Domovoi()
-    domovoi.run(args.processes_file)# Uses the arguments stored earlier to run the program. 
+    if(args.primary == True):
+        file = domovoi.ping_raspi()
+    else:
+        file = settings.SECONDARY_FILE;
+    domovoi.run(file)# Uses the arguments stored earlier to run the program.
         
 if __name__ == '__main__':
     main()

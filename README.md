@@ -6,8 +6,12 @@ The name derives from Slavic folklore where a domovoi is a protective house spir
 
 ## Running
 
-Run as ./domovoi.py [processesfile]
-where processesfile is a text file formatted as the following:  
+Run as ./domovoi.py -p or ./domovoi.py --primary
+
+This will open Domovoi in primary pi mode, which will attempt to open a process file named "primary.txt".
+Running the program without arguments will open Domovoi in secondary pi mode, which will attempt to open a process file named "secondary.txt" 
+
+A process file is a text file formatted as the following:
 
 path/to/process1 arg1 arg2 args...  
 path/to/process2
