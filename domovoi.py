@@ -11,20 +11,18 @@ import settings
 
 from solar_car_process import SolarCarProcess
 
+'''
+Attempt to Ping the other pi, if the pi responds open primary processes, otherwise open secondary processes
+'''
+def ping_raspi():
+    response = os.system("ping -c 3 " + settings.HOST_IP)
+    pingSuccess = False
+    if response == 0:
+        pingSuccess = True
+    print(pingSuccess)
+    return pingSuccess
 
 class Domovoi:
-
-    '''
-    Attempt to Ping the other pi, if the pi responds open primary processes, otherwise open secondary processes
-    '''
-    def ping_raspi(self):
-        response = os.system("ping -c 3 " + settings.HOST_IP)
-        filename = settings.PRIMARY_FILE
-        if response == 0:
-            filename = settings.PRIMARY_FILE
-        else:
-            filename = settings.SECONDARY_FILE
-        return filename
 
     '''
     Check the path of each process, throw an error if the path is invalid
@@ -75,7 +73,7 @@ class Domovoi:
         self.start_processes(solar_car_processes)
         # Watch over the processes and respond accordingly
         while (len(solar_car_processes)): # Checks to make sure that there are still processes to be watched over.
-                break 
+            break
             for solar_car_process in solar_car_processes:
                 if solar_car_process.check_status() != None:
                     if solar_car_process.process.returncode == 0: # Good exit, removes the process from the list
@@ -98,15 +96,21 @@ class Domovoi:
 
 def main():
     parser = argparse.ArgumentParser()# Take in command line arguments
-    parser.add_argument('--primary', '-p', help='Open Domovoi in Primary Pi mode', action='store_true') # Adds a positional and optional argument for startup modes
+    # Add a positional for startup modes
+    parser.add_argument('mode', help='Domovoi startup mode, run as ./domovoi primary or ./domovoi secondary')
     args = parser.parse_args()
     os.makedirs("logs", exist_ok=True)
     logging.basicConfig(filename='logs/%s' % time.asctime(), format='%(asctime)s - %(levelname)s - %(message)s') # Makes a log of events in this session
+    file = settings.DISPLAY_FILE
+    if(args.mode == "primary"):
+        if(ping_raspi()):
+            file = settings.DISPLAY_FILE
+        else:
+            file = settings.RACE_FILE;
+    elif(args.mode == "secondary"):
+        file = settings.DISPLAY_FILE;
+
     domovoi = Domovoi()
-    if(args.primary == True):
-        file = domovoi.ping_raspi()
-    else:
-        file = settings.SECONDARY_FILE;
     domovoi.run(file)# Uses the arguments stored earlier to run the program.
         
 if __name__ == '__main__':

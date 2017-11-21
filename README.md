@@ -6,10 +6,11 @@ The name derives from Slavic folklore where a domovoi is a protective house spir
 
 ## Running
 
-Run as ./domovoi.py -p or ./domovoi.py --primary
+Run as ./domovoi.py primary or ./domovoi.py secondary
 
-This will open Domovoi in primary pi mode, which will attempt to open a process file named "primary.txt".
-Running the program without arguments will open Domovoi in secondary pi mode, which will attempt to open a process file named "secondary.txt" 
+This will open Domovoi in either primary or secondary pi mode.
+Secondary mode will attempt to open a process file called "display.txt"
+Primary mode will first attempt to ping the secondary pi, if sucessful it will open "display.txt", otherwise it will open "race.txt"
 
 A process file is a text file formatted as the following:
 
