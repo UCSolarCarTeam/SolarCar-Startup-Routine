@@ -14,7 +14,7 @@ class SolarCarProcess:
     '''
     def start(self):
         try:
-            self.process = subprocess.Popen(self.path, stderr=subprocess.PIPE, universal_newlines=True)
+            self.process = subprocess.Popen(self.path, universal_newlines=True)
         except OSError:
             raise
 
